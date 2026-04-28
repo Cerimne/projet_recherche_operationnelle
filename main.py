@@ -16,3 +16,4 @@ def read_pb(name):
         commandes=f.readline().split()
     return cost, list(map(int,provision)), list(map(int,commandes))
 print(read_pb("test"))
+
