@@ -1,0 +1,198 @@
+######################################################################
+  Fichier : problemes/probleme9.txt
+  Algorithme : Balas-Hammer (BH)
+######################################################################
+
+============================================
+  MATRICE DES COÛTS
+============================================
+           C1      C2      C3   Provis. 
+----------------------------------------
+P1         30      20      15     100   
+P2         10      50      2      100   
+P3         9       10      30     100   
+P4         6       2       29     100   
+P5         50      40      3      100   
+P6         5       38      27     100   
+P7         50      4       22     100   
+----------------------------------------
+ Comm.    400     200     100   
+============================================
+
+==================================================
+  ALGORITHME BALAS-HAMMER
+==================================================
+
+  --- Étape 1 ---
+  Pénalités lignes : P1=5  P2=8  P3=1  P4=4  P5=37  P6=22  P7=18  
+  Pénalités colonnes : C1=1  C2=2  C3=1  
+  => Pénalité max = 37 sur la ligne P5
+  -> Affectation (5,3) = 100  (coût unitaire=3, reste P5=0, C3=0)
+
+  --- Étape 2 ---
+  Pénalités lignes : P1=5  P2=8  P3=1  P4=4  P6=22  P7=18  
+  Pénalités colonnes : C1=1  C2=2  C3=13  
+  => Pénalité max = 22 sur la ligne P6
+  -> Affectation (6,1) = 100  (coût unitaire=5, reste P6=0, C1=300)
+
+  --- Étape 3 ---
+  Pénalités lignes : P1=5  P2=8  P3=1  P4=4  P7=18  
+  Pénalités colonnes : C1=3  C2=2  C3=13  
+  => Pénalité max = 18 sur la ligne P7
+  -> Affectation (7,2) = 100  (coût unitaire=4, reste P7=0, C2=100)
+
+  --- Étape 4 ---
+  Pénalités lignes : P1=5  P2=8  P3=1  P4=4  
+  Pénalités colonnes : C1=3  C2=8  C3=13  
+  => Pénalité max = 13 sur la colonne C3
+  -> Affectation (2,3) = 0  (coût unitaire=2, reste P2=100, C3=0)
+
+  --- Étape 5 ---
+  Pénalités lignes : P1=10  P2=40  P3=1  P4=4  
+  Pénalités colonnes : C1=3  C2=8  
+  => Pénalité max = 40 sur la ligne P2
+  -> Affectation (2,1) = 100  (coût unitaire=10, reste P2=0, C1=200)
+
+  --- Étape 6 ---
+  Pénalités lignes : P1=10  P3=1  P4=4  
+  Pénalités colonnes : C1=3  C2=8  
+  => Pénalité max = 10 sur la ligne P1
+  -> Affectation (1,2) = 100  (coût unitaire=20, reste P1=0, C2=0)
+
+  --- Étape 7 ---
+  Pénalités lignes : P3=1  P4=4  
+  Pénalités colonnes : C1=3  C2=8  
+  => Pénalité max = 8 sur la colonne C2
+  -> Affectation (4,2) = 0  (coût unitaire=2, reste P4=100, C2=0)
+
+  --- Étape 8 ---
+  Pénalités lignes : P3=9  P4=6  
+  Pénalités colonnes : C1=3  
+  => Pénalité max = 9 sur la ligne P3
+  -> Affectation (3,1) = 100  (coût unitaire=9, reste P3=0, C1=100)
+
+  --- Étape 9 ---
+  Pénalités lignes : P4=6  
+  Pénalités colonnes : C1=6  
+  => Pénalité max = 6 sur la ligne P4
+  -> Affectation (4,1) = 100  (coût unitaire=6, reste P4=0, C1=0)
+
+============================================
+  PROPOSITION INITIALE — BALAS-HAMMER (BH)
+============================================
+           C1      C2      C3   Provis. 
+----------------------------------------
+P1         -      100      -      100   
+P2        100      -       -      100   
+P3        100      -       -      100   
+P4        100      -       -      100   
+P5         -       -      100     100   
+P6        100      -       -      100   
+P7         -      100      -      100   
+----------------------------------------
+ Comm.    400     200     100   
+============================================
+
+  Coût initial : 5700
+
+============================================================
+  MÉTHODE DU MARCHE-PIED AVEC POTENTIELS [BH]
+============================================================
+
+============================================================
+  ITÉRATION 1
+============================================================
+
+============================================
+  PROPOSITION (itération 1)
+============================================
+           C1      C2      C3   Provis. 
+----------------------------------------
+P1         -      100      -      100   
+P2        100      -       -      100   
+P3        100      -       -      100   
+P4        100      -       -      100   
+P5         -       -      100     100   
+P6        100      -       -      100   
+P7         -      100      -      100   
+----------------------------------------
+ Comm.    400     200     100   
+============================================
+
+  Coût total : 5700
+
+  [Non connexe] Composantes connexes :
+    Composante 1 : P1, C2, P7
+    Composante 2 : P2, C1, P6, P3, P4
+    Composante 3 : P5, C3
+  -> Ajout de l'arête fictive (2,3) [coût=2] pour connexité
+  -> Ajout de l'arête fictive (4,2) [coût=2] pour connexité
+
+  POTENTIELS :
+  ui : u1=0    u2=-14  u3=-15  u4=-18  u5=-13  u6=-19  u7=-16  
+  vj : v1=24   v2=20   v3=16   
+
+============================================
+  TABLE DES COÛTS POTENTIELS (ui + vj)
+============================================
+           C1      C2      C3   
+--------------------------------
+P1         24      20      16   
+P2         10      6       2    
+P3         9       5       1    
+P4         6       2       -2   
+P5         11      7       3    
+P6         5       1       -3   
+P7         8       4       0    
+============================================
+
+============================================
+  TABLE DES COÛTS MARGINAUX (cij - ui - vj) [cases vides]
+============================================
+           C1      C2      C3   
+--------------------------------
+P1         6     [base]    -1   
+P2       [base]    44      0    
+P3       [base]    5       29   
+P4       [base]    0       31   
+P5         39      33    [base] 
+P6       [base]    37      30   
+P7         42    [base]    22   
+============================================
+
+  Meilleure arête améliorante : (1,3) [coût marginal = -1]
+  Cycle détecté : P2 -> C3 -> P1 -> C2 -> P4 -> C1 -> P2
+
+  CONDITIONS DU CYCLE :
+    (2,3) : -  [transport actuel = 0]
+    (1,3) : +  [transport actuel = 0]
+    (1,2) : -  [transport actuel = 100]
+    (4,2) : +  [transport actuel = 0]
+    (4,1) : -  [transport actuel = 100]
+    (2,1) : +  [transport actuel = 100]
+
+  δ = 0
+  [Cas dégénéré] δ = 0 → suppression d'une arête artificielle
+
+============================================================
+  ITÉRATION 2
+============================================================
+  [Arrêt] Boucle détectée : solution déjà rencontrée.
+
+============================================
+  PROPOSITION OPTIMALE
+============================================
+           C1      C2      C3   Provis. 
+----------------------------------------
+P1         -      100      -      100   
+P2        100      -       -      100   
+P3        100      -       -      100   
+P4        100      -       -      100   
+P5         -       -      100     100   
+P6        100      -       -      100   
+P7         -      100      -      100   
+----------------------------------------
+ Comm.    400     200     100   
+============================================
+
+  *** Coût optimal = 5700 ***
